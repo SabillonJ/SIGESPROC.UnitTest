@@ -1,0 +1,100 @@
+--procedimientos finales de cotizacion
+GO
+CREATE OR ALTER PROCEDURE Insu.SP_ReporteInsumosUltimoPrecio
+    @FechaInicio DATE,
+    @FechaFin DATE
+AS
+BEGIN
+    SELECT 
+        ins.insu_Id AS NumeroInsumo,
+        ins.insu_Descripcion AS DescripcionInsumo,
+        ins.insu_Observacion AS Observaciones,
+        mat.mate_Descripcion AS DescripcionMaterial,
+        sub.suca_Descripcion AS DescripcionSubcategoria,
+        ins.insu_UltimoPrecioUnitario AS UltimoPrecioUnitario,
+         FORMAT(ins.insu_FechaModificacion, 'dd/MM/yyyy') AS FechaFinal
+    FROM [SIGESPROC].[Insu].[tbInsumos] ins
+    LEFT JOIN [SIGESPROC].[Insu].[tbMateriales] mat
+        ON ins.mate_Id = mat.mate_Id
+    LEFT JOIN [SIGESPROC].[Insu].[tbSubcategorias] sub
+        ON ins.suca_Id = sub.suca_Id
+    WHERE ins.insu_FechaModificacion BETWEEN @FechaInicio AND @FechaFin
+    ORDER BY ins.insu_FechaModificacion DESC;
+END
+
+EXEC Insu.SP_ReporteInsumosUltimoPrecio
+    @FechaInicio = '2024-08-01',
+    @FechaFin = '2024-08-16';
+-----------------------------------------------------------------------
+CREATE OR ALTER PROCEDURE Insu.SP_ReporteComprasPendientesDeEnvio
+    @FechaInicio DATE,  -- Parámetro para la fecha de inicio
+    @FechaFin DATE      -- Parámetro para la fecha de fin
+AS
+BEGIN
+    SELECT 
+        c.coen_Id AS CompraID,
+         FORMAT(c.coen_FechaCreacion, 'dd/MM/yyyy')  AS FechaCreacionCompra,
+        cd.codt_Id AS DetalleID,
+        cd.code_Id AS CodigoID,
+        cd.codt_cantidad AS Cantidad,
+        FORMAT(cd.codt_preciocompra, 'N2') AS PrecioCompra
+    FROM [Insu].[tbComprasEncabezado] c
+    INNER JOIN [Insu].[tbComprasDetalle] cd
+        ON c.coen_Id = cd.coen_Id
+    LEFT JOIN [Insu].[tbComprasDetallesDirecciones] cdd
+        ON cd.codt_Id = cdd.codt_Id
+    LEFT JOIN [Insu].[tbComprasDetallesDireccionesPorMaquinaria] cddm
+        ON cd.codt_Id = cddm.codt_Id
+    WHERE cdd.codt_Id IS NULL 
+      AND cddm.codt_Id IS NULL 
+      AND c.coen_FechaCreacion BETWEEN @FechaInicio AND @FechaFin
+    ORDER BY c.coen_Id, cd.codt_Id;
+END
+
+-- Ejecutar el procedimiento almacenado con un rango de fechas específico
+EXEC Insu.SP_ReporteComprasPendientesDeEnvio
+    @FechaInicio = '2024-01-01',
+    @FechaFin = '2024-12-31';
+3.Go
+CREATE OR ALTER PROCEDURE Insu.SP_ReporteInsumosPorBodega
+    @FechaInicio DATE,  -- Parámetro para la fecha de inicio
+    @FechaFin DATE      -- Parámetro para la fecha de fin
+AS
+BEGIN
+    -- Reporte de cantidad total de insumos en cada bodega
+    SELECT 
+        'Total' AS TipoReporte,
+        b.bode_Descripcion AS NombreBodega,
+        NULL AS DescripcionInsumo,  
+        ISNULL(SUM(bpi.bopi_Stock), 0) AS CantidadTotalInsumos,
+        NULL AS CantidadInsumo,    
+        NULL AS PrecioInsumo,       
+        NULL AS FechaCreacion       
+    FROM [SIGESPROC].[Insu].[tbBodegas] b
+    INNER JOIN [SIGESPROC].[Insu].[tbBodegasPorInsumo] bpi
+        ON b.bode_Id = bpi.bode_Id
+    INNER JOIN [SIGESPROC].[Insu].[tbInsumos] i
+        ON bpi.inpp_Id = i.insu_Id
+    WHERE bpi.bopi_FechaCreacion BETWEEN @FechaInicio AND @FechaFin
+    GROUP BY b.bode_Descripcion
+
+    UNION ALL
+
+    -- Reporte de insumos en cada bodega con detalles individuales
+    SELECT 
+        'Detalle' AS TipoReporte,
+        b.bode_Descripcion AS NombreBodega,
+        ISNULL(i.insu_Descripcion, 'Ninguno') AS DescripcionInsumo,
+        NULL AS CantidadTotalInsumos,  
+        ISNULL(bpi.bopi_Stock, 0) AS CantidadInsumo,
+        ISNULL(FORMAT(bpi.bopi_Precio, 'N2'), 'N/A') AS PrecioInsumo,
+        ISNULL(FORMAT(bpi.bopi_FechaCreacion, 'dd/MM/yyyy'), 'N/A') AS FechaCreacion
+    FROM [SIGESPROC].[Insu].[tbBodegas] b
+    LEFT JOIN [SIGESPROC].[Insu].[tbBodegasPorInsumo] bpi
+        ON b.bode_Id = bpi.bode_Id
+    LEFT JOIN [SIGESPROC].[Insu].[tbInsumos] i
+        ON bpi.inpp_Id = i.insu_Id
+    WHERE bpi.bopi_FechaCreacion BETWEEN @FechaInicio AND @FechaFin
+
+    ORDER BY NombreBodega, TipoReporte DESC, DescripcionInsumo;
+END
