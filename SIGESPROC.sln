@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIGESPROC.BusinessLogic", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIGESPROC.Common", "SIGESPROC.Common\SIGESPROC.Common.csproj", "{0A2A09FB-7DF2-42B7-8547-820E5BA4DAF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIGESPROC.UnitTest", "SIGESPROC.UnitTest\SIGESPROC.UnitTest.csproj", "{A63566A4-53AF-4C15-94F4-76CBE1C45A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIGESPROC.UnitTest", "SIGESPROC.UnitTest\SIGESPROC.UnitTest.csproj", "{A63566A4-53AF-4C15-94F4-76CBE1C45A43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIGESPROC.IntegrationTest", "SIGESPROC.IntegrationTest\SIGESPROC.IntegrationTest.csproj", "{BD38FA59-5D76-4916-A596-C75C1A67A677}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A63566A4-53AF-4C15-94F4-76CBE1C45A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A63566A4-53AF-4C15-94F4-76CBE1C45A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A63566A4-53AF-4C15-94F4-76CBE1C45A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD38FA59-5D76-4916-A596-C75C1A67A677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD38FA59-5D76-4916-A596-C75C1A67A677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD38FA59-5D76-4916-A596-C75C1A67A677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD38FA59-5D76-4916-A596-C75C1A67A677}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
