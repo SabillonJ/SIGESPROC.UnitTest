@@ -151,9 +151,8 @@ namespace SIGESPROC.API.Controllers.ControllersInsumo
                 }
 
                 var responses = _insumoService.BuscarCotizacion(coti_Id.CodeStatus);
-                var lista = responses.Data as List<tbCotizaciones>;
 
-                // Obtener los codeIds y ordenarlos de manera ascendente
+                var lista = responses.Data as List<tbCotizaciones>;
                 var codeIds = lista.Select(x => x.code_Id).OrderBy(x => x).ToList();
                 string codeIdsString = string.Join(",", codeIds);
 

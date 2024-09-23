@@ -22,6 +22,8 @@
 
   <ItemGroup>
     
+    <Folder Include="Controllers\ControllerUnitTest\" />
+    
     <Folder Include="Properties\PublishProfiles\" />
     
     <Folder Include="wwwroot\proyecto\documentos\" />
