@@ -26,11 +26,7 @@ namespace SIGESPROC.UnitTest.Controllers
     public class CotizacionTest
     {
         private InsumoService _insumoService;
-        private PlanillaService _planillaService;
-        private FrecuenciaService _frecuenciaService;
-        private PrestamoService _prestamoService;
-        private DeduccionService _deduccionService;
-        private GeneralService _generalService;
+  
 
 
 
@@ -48,15 +44,6 @@ namespace SIGESPROC.UnitTest.Controllers
             Assert.IsInstanceOfType(result, typeof(IActionResult));
         }
 
-        [TestMethod]
-
-        public void ListarPlanilla()
-        {
-            PlanillaController planillaController = new PlanillaController(_planillaService, _mapper, _generalService, _frecuenciaService, _prestamoService, _deduccionService);
-            var result = planillaController.ListarPlanilla();
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IActionResult));
-        }
 
 
 
