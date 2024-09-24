@@ -39,17 +39,13 @@ namespace SIGESPROC.IntegrationTest.Controllers
         {
             CotizacionDetalleController cotizacionDetalleController = new CotizacionDetalleController(_insumoService, _mapper);
             CotizacionDetalleViewModel cotizacionOriginal = _cotizacionRequest.GetSampleCotizacionRequest();
-
             int cantidad = 3;
             decimal precioCompra = 5500;
             cotizacionOriginal.code_Cantidad = cantidad;
             cotizacionOriginal.code_PrecioCompra = precioCompra;
-
             var result = cotizacionDetalleController.Update(cotizacionOriginal);
-
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IActionResult));
-
             var cotizacionActualizada = _insumoService.BuscarCotizacionDetalle(cotizacionOriginal.code_Id);
             Assert.AreEqual(cantidad, cotizacionActualizada.Data.code_Cantidad);
             Assert.AreEqual(precioCompra, cotizacionActualizada.Data.code_PrecioCompra);

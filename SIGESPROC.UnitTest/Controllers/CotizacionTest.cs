@@ -97,14 +97,10 @@ public class CotizacionTest
     [TestMethod]
     public void InsertarCotizacion()
     {
-        // Crear una solicitud de cotización
-        CotizacionRequest cotizacionRequest = new CotizacionRequest();
-        // Obtener una lista de cotizaciones de muestra
-        List<CotizacionViewModel> cotizacionViewModelList = cotizacionRequest.GetSampleCotizacionRequest();
-        // Afirmar que la lista de cotizaciones no es nula
-        Assert.IsNotNull(cotizacionViewModelList, "La lista de CotizacionViewModel no puede ser nula");
-        // Instanciar el controlador de cotización
-        CotizacionController cotizacionController = new CotizacionController(_insumoService, _mapper);
+        CotizacionRequest cotizacionRequest = new CotizacionRequest(); // Crear una solicitud de cotización
+        List<CotizacionViewModel> cotizacionViewModelList = cotizacionRequest.GetSampleCotizacionRequest();    // Obtener una lista de cotizaciones de muestra
+        Assert.IsNotNull(cotizacionViewModelList, "La lista de CotizacionViewModel no puede ser nula");        // Afirmar que la lista de cotizaciones no es nula
+        CotizacionController cotizacionController = new CotizacionController(_insumoService, _mapper);         // Instanciar el controlador de cotización
         // Llamar al método para crear la cotización
         var result = cotizacionController.Create(cotizacionViewModelList);
         // Afirmar que el resultado no es nulo
