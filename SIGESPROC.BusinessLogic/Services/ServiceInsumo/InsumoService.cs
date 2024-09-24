@@ -32,22 +32,22 @@ namespace SIGESPROC.BusinessLogic.Services.ServiceInsumo
 
         public InsumoService(
                CotizacionDetalleRepository cotizacionDetalleRepository, 
-               CotizacionRepository cotizacionRepository, 
-               InsumoPorMedidaRepository insumoPorMedidaRepository, 
-               InsumoPorProveedorRepository insumoPorProveedorRepository, 
+               CotizacionRepository? cotizacionRepository = null,
+               InsumoPorMedidaRepository? insumoPorMedidaRepository = null, 
+               InsumoPorProveedorRepository? insumoPorProveedorRepository = null, 
               
-               InsumoRepository insumoRepository,
-               MaterialRepository materialRepository, 
-               ProveedorRepository proveedorRepository,
-               BodegaRepository bodegaRepository,
-               BodegaPorInsumoRepository bodegaPorInsumoRepository,
-               CompraEncabezadoRepository compraEncabezadoRepository,
+               InsumoRepository? insumoRepository = null,
+               MaterialRepository? materialRepository = null, 
+               ProveedorRepository? proveedorRepository = null,
+               BodegaRepository? bodegaRepository = null,
+               BodegaPorInsumoRepository? bodegaPorInsumoRepository = null,
+               CompraEncabezadoRepository? compraEncabezadoRepository = null,
      
-               MaquinariaRepository maquinariaRepository,
-               MaquinariaPorProveedorRepository maquinariaPorProveedorRepository,
-               SubCategoriaRepository subCategoriaRepository,
-               CompraDetalleRepository compraDetalleRepository,
-               CotizacionPorDocumentoRepository cotizacionPorDocumentoRepository
+               MaquinariaRepository? maquinariaRepository = null,
+               MaquinariaPorProveedorRepository? maquinariaPorProveedorRepository = null,
+               SubCategoriaRepository? subCategoriaRepository = null,
+               CompraDetalleRepository? compraDetalleRepository = null,
+               CotizacionPorDocumentoRepository? cotizacionPorDocumentoRepository = null
              )
 
         {
